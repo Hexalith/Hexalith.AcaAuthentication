@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+	<PropertyGroup>
+		<TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+		<UserSecretsId>ec81df23-6b1e-4de8-b8ad-539fbc979451</UserSecretsId>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Hexalith.AzureContainerAppAuthentication.Client\Hexalith.AzureContainerAppAuthentication.Client.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(AspNetCorePackagesVersion)" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="$(AspNetCorePackagesVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsPackagesVersion)" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="$(MicrosoftIdentityWebVersion)" />
+	</ItemGroup>
+</Project>
