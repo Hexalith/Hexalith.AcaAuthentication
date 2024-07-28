@@ -1,6 +1,6 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Server;
+﻿namespace Hexalith.AcaAuthentication.Server;
 
-using Hexalith.AzureContainerAppAuthentication.Shared;
+using Hexalith.AcaAuthentication.Shared;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

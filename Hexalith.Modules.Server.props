@@ -4,14 +4,14 @@
 	</PropertyGroup>
 	<Import Project="$(HexalithModulesServerProps)" Condition=" '$(HexalithModulesServerProps)' != '' " />
 	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-		<ProjectReference Include="$(HexalithAzureContainerAppAuthenticationPath)\src\Modules\Hexalith.AzureContainerAppAuthentication.Shared\Hexalith.AzureContainerAppAuthentication.Shared.csproj" />
-		<ProjectReference Include="$(HexalithAzureContainerAppAuthenticationPath)\src\Modules\Hexalith.AzureContainerAppAuthentication.Client\Hexalith.AzureContainerAppAuthentication.Client.csproj" />
-		<ProjectReference Include="$(HexalithAzureContainerAppAuthenticationPath)\src\Modules\Hexalith.AzureContainerAppAuthentication.Server\Hexalith.AzureContainerAppAuthentication.Server.csproj" />
+		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Shared\Hexalith.AcaAuthentication.Shared.csproj" />
+		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Client\Hexalith.AcaAuthentication.Client.csproj" />
+		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Server\Hexalith.AcaAuthentication.Server.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-		<PackageReference Include="Hexalith.AzureContainerAppAuthentication.Shared" Version="$(HexalithAzureContainerAppAuthenticationVersion)" />
-		<PackageReference Include="Hexalith.AzureContainerAppAuthentication.Client" Version="$(HexalithAzureContainerAppAuthenticationVersion)" />
-		<PackageReference Include="Hexalith.AzureContainerAppAuthentication.Server" Version="$(HexalithAzureContainerAppAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.AcaAuthentication.Shared" Version="$(HexalithAcaAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.AcaAuthentication.Client" Version="$(HexalithAcaAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.AcaAuthentication.Server" Version="$(HexalithAcaAuthenticationVersion)" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="$(MSBuildThisFileDirectory)src/ServerApplication.cs" />

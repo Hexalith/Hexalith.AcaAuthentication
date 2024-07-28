@@ -1,9 +1,9 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Client;
+﻿namespace Hexalith.AcaAuthentication.Client;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 
-using Hexalith.AzureContainerAppAuthentication.Shared;
+using Hexalith.AcaAuthentication.Shared;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

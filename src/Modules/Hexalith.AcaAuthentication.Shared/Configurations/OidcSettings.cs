@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Shared.Configurations;
+﻿namespace Hexalith.AcaAuthentication.Shared.Configurations;
 
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -24,10 +24,10 @@ using Hexalith.Extensions.Configuration;
 /// Set the client secret for the application.
 /// </param>
 [DataContract]
-public record AzureContainerAppAuthenticationSettings(
+public record AcaAuthenticationSettings(
     [property: DataMember]
     [property:JsonConverter(typeof(JsonStringEnumConverter))]
-    AzureContainerAppAuthenticationType AzureContainerAppAuthenticationType,
+    AcaAuthenticationType AcaAuthenticationType,
     [property: DataMember]
     string Tenant,
     [property: DataMember]
@@ -38,10 +38,10 @@ public record AzureContainerAppAuthenticationSettings(
     string ClientSecret) : ISettings
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AzureContainerAppAuthenticationSettings"/> class.
+    /// Initializes a new instance of the <see cref="AcaAuthenticationSettings"/> class.
     /// </summary>
-    public AzureContainerAppAuthenticationSettings()
-        : this(AzureContainerAppAuthenticationType.AzureContainerAppAuthentication, string.Empty, string.Empty, string.Empty, string.Empty)
+    public AcaAuthenticationSettings()
+        : this(AcaAuthenticationType.AcaAuthentication, string.Empty, string.Empty, string.Empty, string.Empty)
     {
     }
 
@@ -49,5 +49,5 @@ public record AzureContainerAppAuthenticationSettings(
     /// The name of the configuration.
     /// </summary>
     /// <returns>Settings section name.</returns>
-    public static string ConfigurationName() => nameof(Hexalith) + ":" + nameof(AzureContainerAppAuthentication);
+    public static string ConfigurationName() => nameof(Hexalith) + ":" + nameof(AcaAuthentication);
 }

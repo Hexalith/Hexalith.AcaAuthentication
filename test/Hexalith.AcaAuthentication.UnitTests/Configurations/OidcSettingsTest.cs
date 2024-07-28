@@ -1,39 +1,39 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.UnitTests.Configurations;
+﻿namespace Hexalith.AcaAuthentication.UnitTests.Configurations;
 
 using System.Text.Json;
 
 using FluentAssertions;
 
 using Hexalith.Extensions.Helpers;
-using Hexalith.AzureContainerAppAuthentication.Shared.Configurations;
+using Hexalith.AcaAuthentication.Shared.Configurations;
 using Hexalith.TestMocks;
 
 using Microsoft.Extensions.Configuration;
 
-public class AzureContainerAppAuthenticationSettingsTest : SerializationTestBase
+public class AcaAuthenticationSettingsTest : SerializationTestBase
 {
     public static Dictionary<string, string> TestSettings => new()
         {
-            { "Hexalith:AzureContainerAppAuthentication:AzureContainerAppAuthenticationType", "MicrosoftEntraId" },
-            { "Hexalith:AzureContainerAppAuthentication:Tenant", "fiveforty.fr" },
-            { "Hexalith:AzureContainerAppAuthentication:Authority", "https://myauthority" },
-            { "Hexalith:AzureContainerAppAuthentication:ClientId", "125642" },
-            { "Hexalith:AzureContainerAppAuthentication:ClientSecret", "65125642" },
+            { "Hexalith:AcaAuthentication:AcaAuthenticationType", "MicrosoftEntraId" },
+            { "Hexalith:AcaAuthentication:Tenant", "fiveforty.fr" },
+            { "Hexalith:AcaAuthentication:Authority", "https://myauthority" },
+            { "Hexalith:AcaAuthentication:ClientId", "125642" },
+            { "Hexalith:AcaAuthentication:ClientSecret", "65125642" },
         };
 
     [Fact]
     public void GetSettingsFromConfigurationShouldSucceed()
     {
         IConfigurationRoot configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(AzureContainerAppAuthenticationSettingsTest.TestSettings)
+            .AddInMemoryCollection(AcaAuthenticationSettingsTest.TestSettings)
             .Build();
-        AzureContainerAppAuthenticationSettings settings = configuration.GetSettings<AzureContainerAppAuthenticationSettings>();
+        AcaAuthenticationSettings settings = configuration.GetSettings<AcaAuthenticationSettings>();
         _ = settings.Should().NotBeNull();
         _ = settings.Tenant.Should().Be("fiveforty.fr");
         _ = settings.Authority.Should().Be("https://myauthority");
         _ = settings.ClientId.Should().Be("125642");
         _ = settings.ClientSecret.Should().Be("65125642");
-        _ = settings.AzureContainerAppAuthenticationType.Should().Be(AzureContainerAppAuthenticationType.MicrosoftEntraId);
+        _ = settings.AcaAuthenticationType.Should().Be(AcaAuthenticationType.MicrosoftEntraId);
     }
 
     [Fact]
@@ -41,30 +41,30 @@ public class AzureContainerAppAuthenticationSettingsTest : SerializationTestBase
     {
         // Arrange
         string json = @"{
-            ""AzureContainerAppAuthenticationType"": ""MicrosoftEntraId"",
+            ""AcaAuthenticationType"": ""MicrosoftEntraId"",
             ""Tenant"": ""fiveforty.fr"",
-            ""Authority"": ""https://helloAzureContainerAppAuthentication"",
+            ""Authority"": ""https://helloAcaAuthentication"",
             ""ClientId"": ""123456"",
             ""ClientSecret"": ""789000""
         }";
 
         // Act
-        AzureContainerAppAuthenticationSettings settings = JsonSerializer.Deserialize<AzureContainerAppAuthenticationSettings>(json);
+        AcaAuthenticationSettings settings = JsonSerializer.Deserialize<AcaAuthenticationSettings>(json);
 
         // Assert
         _ = settings.Should().NotBeNull();
-        _ = settings.AzureContainerAppAuthenticationType.Should().Be(AzureContainerAppAuthenticationType.MicrosoftEntraId);
+        _ = settings.AcaAuthenticationType.Should().Be(AcaAuthenticationType.MicrosoftEntraId);
         _ = settings.Tenant.Should().Be("fiveforty.fr");
-        _ = settings.Authority.Should().Be("https://helloAzureContainerAppAuthentication");
+        _ = settings.Authority.Should().Be("https://helloAcaAuthentication");
         _ = settings.ClientId.Should().Be("123456");
         _ = settings.ClientSecret.Should().Be("789000");
     }
 
-    public override object ToSerializeObject() => new AzureContainerAppAuthenticationSettings
+    public override object ToSerializeObject() => new AcaAuthenticationSettings
     {
-        AzureContainerAppAuthenticationType = AzureContainerAppAuthenticationType.MicrosoftEntraId,
+        AcaAuthenticationType = AcaAuthenticationType.MicrosoftEntraId,
         Tenant = "fiveforty.fr",
-        Authority = "https://helloAzureContainerAppAuthentication",
+        Authority = "https://helloAcaAuthentication",
         ClientId = "123456",
         ClientSecret = "789000",
     };

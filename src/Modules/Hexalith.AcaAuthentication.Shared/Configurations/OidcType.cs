@@ -1,17 +1,17 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Shared.Configurations;
+﻿namespace Hexalith.AcaAuthentication.Shared.Configurations;
 
 /// <summary>
-/// Represents the AzureContainerAppAuthentication types.
+/// Represents the AcaAuthentication types.
 /// </summary>
-public enum AzureContainerAppAuthenticationType
+public enum AcaAuthenticationType
 {
     /// <summary>
-    /// Represents the Microsoft EntraId AzureContainerAppAuthentication type.
+    /// Represents the Microsoft EntraId AcaAuthentication type.
     /// </summary>
     MicrosoftEntraId,
 
     /// <summary>
-    /// Represents the AzureContainerAppAuthentication AzureContainerAppAuthentication type.
+    /// Represents the AcaAuthentication AcaAuthentication type.
     /// </summary>
-    AzureContainerAppAuthentication,
+    AcaAuthentication,
 }

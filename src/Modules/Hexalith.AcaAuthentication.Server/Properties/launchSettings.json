@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Hexalith.AzureContainerAppAuthentication.Server": {
+    "Hexalith.AcaAuthentication.Server": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

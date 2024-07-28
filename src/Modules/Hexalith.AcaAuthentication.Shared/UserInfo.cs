@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Shared;
+﻿namespace Hexalith.AcaAuthentication.Shared;
 
 using System.Security.Claims;
 

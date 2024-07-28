@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Server;
+﻿namespace Hexalith.AcaAuthentication.Server;
 
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,12 +15,12 @@ using Microsoft.IdentityModel.Tokens;
 /// <summary>
 /// https://github.com/dotnet/aspnetcore/issues/8175.
 /// </summary>
-/// <param name="AzureContainerAppAuthenticationOptionsMonitor">AzureContainerAppAuthentication options.</param>
-internal sealed class CookieAzureContainerAppAuthenticationRefresher(IOptionsMonitor<OpenIdConnectOptions> AzureContainerAppAuthenticationOptionsMonitor) : IDisposable
+/// <param name="AcaAuthenticationOptionsMonitor">AcaAuthentication options.</param>
+internal sealed class CookieAcaAuthenticationRefresher(IOptionsMonitor<OpenIdConnectOptions> AcaAuthenticationOptionsMonitor) : IDisposable
 {
-    private readonly OpenIdConnectProtocolValidator _AzureContainerAppAuthenticationTokenValidator = new()
+    private readonly OpenIdConnectProtocolValidator _AcaAuthenticationTokenValidator = new()
     {
-        // Refresh requests do not use the nonce parameter. Otherwise, we'd use AzureContainerAppAuthenticationOptions.ProtocolValidator.
+        // Refresh requests do not use the nonce parameter. Otherwise, we'd use AcaAuthenticationOptions.ProtocolValidator.
         RequireNonce = false,
     };
 
@@ -33,10 +33,10 @@ internal sealed class CookieAzureContainerAppAuthenticationRefresher(IOptionsMon
     /// Validates or refreshes the cookie.
     /// </summary>
     /// <param name="validateContext">The context.</param>
-    /// <param name="AzureContainerAppAuthenticationScheme">The AzureContainerAppAuthentication scheme.</param>
+    /// <param name="AcaAuthenticationScheme">The AcaAuthentication scheme.</param>
     /// <returns>The tesk.</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    internal async Task ValidateOrRefreshCookieAsync(CookieValidatePrincipalContext validateContext, string AzureContainerAppAuthenticationScheme)
+    internal async Task ValidateOrRefreshCookieAsync(CookieValidatePrincipalContext validateContext, string AcaAuthenticationScheme)
     {
         string? accessTokenExpirationText = validateContext.Properties.GetTokenValue("expires_at");
         if (!DateTimeOffset.TryParse(
@@ -47,22 +47,22 @@ internal sealed class CookieAzureContainerAppAuthenticationRefresher(IOptionsMon
             return;
         }
 
-        OpenIdConnectOptions AzureContainerAppAuthenticationOptions = AzureContainerAppAuthenticationOptionsMonitor.Get(AzureContainerAppAuthenticationScheme);
-        DateTimeOffset now = AzureContainerAppAuthenticationOptions.TimeProvider!.GetUtcNow();
+        OpenIdConnectOptions AcaAuthenticationOptions = AcaAuthenticationOptionsMonitor.Get(AcaAuthenticationScheme);
+        DateTimeOffset now = AcaAuthenticationOptions.TimeProvider!.GetUtcNow();
         if (now + TimeSpan.FromMinutes(5) < accessTokenExpiration)
         {
             return;
         }
 
         const string refreshTokenName = "refresh_token";
-        OpenIdConnectConfiguration AzureContainerAppAuthenticationConfiguration = await AzureContainerAppAuthenticationOptions.ConfigurationManager!.GetConfigurationAsync(validateContext.HttpContext.RequestAborted).ConfigureAwait(false);
-        string tokenEndpoint = AzureContainerAppAuthenticationConfiguration.TokenEndpoint ?? throw new InvalidOperationException("Cannot refresh cookie. TokenEndpoint missing!");
+        OpenIdConnectConfiguration AcaAuthenticationConfiguration = await AcaAuthenticationOptions.ConfigurationManager!.GetConfigurationAsync(validateContext.HttpContext.RequestAborted).ConfigureAwait(false);
+        string tokenEndpoint = AcaAuthenticationConfiguration.TokenEndpoint ?? throw new InvalidOperationException("Cannot refresh cookie. TokenEndpoint missing!");
         using FormUrlEncodedContent formUrlEncoded = new(new Dictionary<string, string?>
         {
             ["grant_type"] = refreshTokenName,
-            ["client_id"] = AzureContainerAppAuthenticationOptions.ClientId,
-            ["client_secret"] = AzureContainerAppAuthenticationOptions.ClientSecret,
-            ["scope"] = string.Join(" ", AzureContainerAppAuthenticationOptions.Scope),
+            ["client_id"] = AcaAuthenticationOptions.ClientId,
+            ["client_secret"] = AcaAuthenticationOptions.ClientSecret,
+            ["scope"] = string.Join(" ", AcaAuthenticationOptions.Scope),
             [refreshTokenName] = validateContext.Properties.GetTokenValue(refreshTokenName),
         });
         using HttpResponseMessage refreshResponse = await _refreshClient.PostAsync(
@@ -79,18 +79,18 @@ internal sealed class CookieAzureContainerAppAuthenticationRefresher(IOptionsMon
         string refreshJson = await refreshResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
         OpenIdConnectMessage message = new(refreshJson);
 
-        TokenValidationParameters validationParameters = AzureContainerAppAuthenticationOptions.TokenValidationParameters.Clone();
-        if (AzureContainerAppAuthenticationOptions.ConfigurationManager is BaseConfigurationManager baseConfigurationManager)
+        TokenValidationParameters validationParameters = AcaAuthenticationOptions.TokenValidationParameters.Clone();
+        if (AcaAuthenticationOptions.ConfigurationManager is BaseConfigurationManager baseConfigurationManager)
         {
             validationParameters.ConfigurationManager = baseConfigurationManager;
         }
         else
         {
-            validationParameters.ValidIssuer = AzureContainerAppAuthenticationConfiguration.Issuer;
-            validationParameters.IssuerSigningKeys = AzureContainerAppAuthenticationConfiguration.SigningKeys;
+            validationParameters.ValidIssuer = AcaAuthenticationConfiguration.Issuer;
+            validationParameters.IssuerSigningKeys = AcaAuthenticationConfiguration.SigningKeys;
         }
 
-        TokenValidationResult validationResult = await AzureContainerAppAuthenticationOptions.TokenHandler.ValidateTokenAsync(message.IdToken, validationParameters).ConfigureAwait(false);
+        TokenValidationResult validationResult = await AcaAuthenticationOptions.TokenHandler.ValidateTokenAsync(message.IdToken, validationParameters).ConfigureAwait(false);
 
         if (!validationResult.IsValid)
         {
@@ -98,10 +98,10 @@ internal sealed class CookieAzureContainerAppAuthenticationRefresher(IOptionsMon
             return;
         }
 
-        _AzureContainerAppAuthenticationTokenValidator.ValidateTokenResponse(new()
+        _AcaAuthenticationTokenValidator.ValidateTokenResponse(new()
         {
             ProtocolMessage = message,
-            ClientId = AzureContainerAppAuthenticationOptions.ClientId,
+            ClientId = AcaAuthenticationOptions.ClientId,
             ValidatedIdToken = JwtSecurityTokenConverter.Convert(validationResult.SecurityToken as JsonWebToken),
         });
 

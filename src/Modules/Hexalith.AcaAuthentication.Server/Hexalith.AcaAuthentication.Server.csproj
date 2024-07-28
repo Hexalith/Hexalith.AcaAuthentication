@@ -4,7 +4,7 @@
 		<UserSecretsId>ec81df23-6b1e-4de8-b8ad-539fbc979451</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Hexalith.AzureContainerAppAuthentication.Client\Hexalith.AzureContainerAppAuthentication.Client.csproj" />
+		<ProjectReference Include="..\Hexalith.AcaAuthentication.Client\Hexalith.AcaAuthentication.Client.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(AspNetCorePackagesVersion)" />

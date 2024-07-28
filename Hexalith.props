@@ -9,7 +9,7 @@
 		<HexalithVersion Condition="'$(HexalithVersion)' == ''">*</HexalithVersion>
 		<HexalithAppPath Condition="'$(HexalithAppPath)' == ''">$(HexalithPath)..\HexalithApp\</HexalithAppPath>
 		<HexalithAppVersion Condition="'$(HexalithAppVersion)' == ''">*</HexalithAppVersion>
-		<HexalithAzureContainerAppAuthenticationPath Condition="'$(HexalithAzureContainerAppAuthenticationPath)' == ''">$(MSBuildThisFileDirectory)</HexalithAzureContainerAppAuthenticationPath>
-		<HexalithAzureContainerAppAuthenticationVersion Condition="'$(HexalithAzureContainerAppAuthenticationVersion)' == ''">*</HexalithAzureContainerAppAuthenticationVersion>
+		<HexalithAcaAuthenticationPath Condition="'$(HexalithAcaAuthenticationPath)' == ''">$(MSBuildThisFileDirectory)</HexalithAcaAuthenticationPath>
+		<HexalithAcaAuthenticationVersion Condition="'$(HexalithAcaAuthenticationVersion)' == ''">*</HexalithAcaAuthenticationVersion>
 	</PropertyGroup>
 </Project>

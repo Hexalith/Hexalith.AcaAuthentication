@@ -1,10 +1,10 @@
-namespace Hexalith.AzureContainerAppAuthentication.Client;
+namespace Hexalith.AcaAuthentication.Client;
 
 using System;
 using System.Collections.Generic;
 
 using Hexalith.Application.Modules.Applications;
-using Hexalith.AzureContainerAppAuthentication.Server;
+using Hexalith.AcaAuthentication.Server;
 
 /// <summary>
 /// Represents a server application.
@@ -15,7 +15,7 @@ public class ServerApplication : HexalithServerApplication
     public override Type ClientApplicationType => typeof(ClientApplication);
 
     /// <inheritdoc/>
-    public override IEnumerable<Type> ServerModules => [typeof(HexalithAzureContainerAppAuthenticationServerModule)];
+    public override IEnumerable<Type> ServerModules => [typeof(HexalithAcaAuthenticationServerModule)];
 
     /// <inheritdoc/>
     public override Type SharedApplicationType => typeof(SharedApplication);

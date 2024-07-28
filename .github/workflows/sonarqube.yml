@@ -44,8 +44,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Hexalith_Hexalith.AzureContainerAppAuthentication" /o:"hexalith" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build './src/Modules/Hexalith.AzureContainerAppAuthentication.Shared/Hexalith.AzureContainerAppAuthentication.Shared.csproj' --configuration Release -p:Version=${{ env.VERSION }}
-          dotnet build './src/Modules/Hexalith.AzureContainerAppAuthentication.Client/Hexalith.AzureContainerAppAuthentication.Client.csproj' --configuration Release -p:Version=${{ env.VERSION }}
-          dotnet build './src/Modules/Hexalith.AzureContainerAppAuthentication.Server/Hexalith.AzureContainerAppAuthentication.Server.csproj' --configuration Release -p:Version=${{ env.VERSION }}
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Hexalith_Hexalith.AcaAuthentication" /o:"hexalith" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build './src/Modules/Hexalith.AcaAuthentication.Shared/Hexalith.AcaAuthentication.Shared.csproj' --configuration Release -p:Version=${{ env.VERSION }}
+          dotnet build './src/Modules/Hexalith.AcaAuthentication.Client/Hexalith.AcaAuthentication.Client.csproj' --configuration Release -p:Version=${{ env.VERSION }}
+          dotnet build './src/Modules/Hexalith.AcaAuthentication.Server/Hexalith.AcaAuthentication.Server.csproj' --configuration Release -p:Version=${{ env.VERSION }}
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

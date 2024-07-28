@@ -5,11 +5,11 @@
 	<Import Project="$(HexalithModulesSharedProps)" Condition=" '$(HexalithModulesSharedProps)' != '' " />
 	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
 		<ProjectReference Include="$(HexalithPath)\src\Core\UI\Hexalith.UI.Components\Hexalith.UI.Components.csproj" />
-		<ProjectReference Include="$(HexalithAzureContainerAppAuthenticationPath)\src\Modules\Hexalith.AzureContainerAppAuthentication.Shared\Hexalith.AzureContainerAppAuthentication.Shared.csproj" />
+		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Shared\Hexalith.AcaAuthentication.Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-		<PackageReference Include="Hexalith.UI.Components" Version="$(HexalithAzureContainerAppAuthenticationVersion)" />
-		<PackageReference Include="Hexalith.AzureContainerAppAuthentication.Shared" Version="$(HexalithAzureContainerAppAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.UI.Components" Version="$(HexalithAcaAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.AcaAuthentication.Shared" Version="$(HexalithAcaAuthenticationVersion)" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="$(MSBuildThisFileDirectory)src/SharedApplication.cs" />

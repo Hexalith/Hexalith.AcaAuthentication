@@ -4,12 +4,12 @@
 	</PropertyGroup>
 	<Import Project="$(HexalithModulesClientProps)" Condition=" '$(HexalithModulesClientProps)' != '' " />
 	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-		<ProjectReference Include="$(HexalithAzureContainerAppAuthenticationPath)\src\Modules\Hexalith.AzureContainerAppAuthentication.Shared\Hexalith.AzureContainerAppAuthentication.Shared.csproj" />
-		<ProjectReference Include="$(HexalithAzureContainerAppAuthenticationPath)\src\Modules\Hexalith.AzureContainerAppAuthentication.Client\Hexalith.AzureContainerAppAuthentication.Client.csproj" />
+		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Shared\Hexalith.AcaAuthentication.Shared.csproj" />
+		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Client\Hexalith.AcaAuthentication.Client.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-		<PackageReference Include="Hexalith.AzureContainerAppAuthentication.Shared" Version="$(HexalithAzureContainerAppAuthenticationVersion)" />
-		<PackageReference Include="Hexalith.AzureContainerAppAuthentication.Client" Version="$(HexalithAzureContainerAppAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.AcaAuthentication.Shared" Version="$(HexalithAcaAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.AcaAuthentication.Client" Version="$(HexalithAcaAuthenticationVersion)" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="$(MSBuildThisFileDirectory)src/ClientApplication.cs" />

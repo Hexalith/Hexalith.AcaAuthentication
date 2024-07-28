@@ -1,22 +1,22 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Server;
+﻿namespace Hexalith.AcaAuthentication.Server;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.DependencyInjection;
 
-internal static class CookieAzureContainerAppAuthenticationServiceCollectionExtensions
+internal static class CookieAcaAuthenticationServiceCollectionExtensions
 {
-    public static IServiceCollection ConfigureCookieAzureContainerAppAuthenticationRefresh(this IServiceCollection services, string cookieScheme, string AzureContainerAppAuthenticationScheme)
+    public static IServiceCollection ConfigureCookieAcaAuthenticationRefresh(this IServiceCollection services, string cookieScheme, string AcaAuthenticationScheme)
     {
-        _ = services.AddSingleton<CookieAzureContainerAppAuthenticationRefresher>();
-        _ = services.AddOptions<CookieAuthenticationOptions>(cookieScheme).Configure<CookieAzureContainerAppAuthenticationRefresher>((cookieOptions, refresher) => cookieOptions.Events.OnValidatePrincipal = context => refresher.ValidateOrRefreshCookieAsync(context, AzureContainerAppAuthenticationScheme));
-        _ = services.AddOptions<OpenIdConnectOptions>(AzureContainerAppAuthenticationScheme).Configure(AzureContainerAppAuthenticationOptions =>
+        _ = services.AddSingleton<CookieAcaAuthenticationRefresher>();
+        _ = services.AddOptions<CookieAuthenticationOptions>(cookieScheme).Configure<CookieAcaAuthenticationRefresher>((cookieOptions, refresher) => cookieOptions.Events.OnValidatePrincipal = context => refresher.ValidateOrRefreshCookieAsync(context, AcaAuthenticationScheme));
+        _ = services.AddOptions<OpenIdConnectOptions>(AcaAuthenticationScheme).Configure(AcaAuthenticationOptions =>
         {
             // Request a refresh_token.
-            AzureContainerAppAuthenticationOptions.Scope.Add("offline_access");
+            AcaAuthenticationOptions.Scope.Add("offline_access");
 
             // Store the refresh_token.
-            AzureContainerAppAuthenticationOptions.SaveTokens = true;
+            AcaAuthenticationOptions.SaveTokens = true;
         });
         return services;
     }

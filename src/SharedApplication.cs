@@ -1,7 +1,7 @@
-namespace Hexalith.AzureContainerAppAuthentication.Client;
+namespace Hexalith.AcaAuthentication.Client;
 
 using Hexalith.Application.Modules.Applications;
-using Hexalith.AzureContainerAppAuthentication.Shared;
+using Hexalith.AcaAuthentication.Shared;
 using Hexalith.UI.Components.Modules;
 
 /// <summary>
@@ -13,7 +13,7 @@ public class SharedApplication : HexalithSharedApplication
     public override string HomePath => "hexalith";
 
     /// <inheritdoc/>
-    public override string Id => "hexalithAzureContainerAppAuthentication";
+    public override string Id => "hexalithAcaAuthentication";
 
     /// <inheritdoc/>
     public override string LoginPath => "authentication/login";
@@ -22,11 +22,11 @@ public class SharedApplication : HexalithSharedApplication
     public override string LogoutPath => "authentication/logout";
 
     /// <inheritdoc/>
-    public override string Name => "Hexalith AzureContainerAppAuthentication";
+    public override string Name => "Hexalith AcaAuthentication";
 
     /// <inheritdoc/>
     public override IEnumerable<Type> SharedModules =>
     [
-        typeof(HexalithAzureContainerAppAuthenticationSharedModule), typeof(HexalithUIComponentsSharedModule)
+        typeof(HexalithAcaAuthenticationSharedModule), typeof(HexalithUIComponentsSharedModule)
     ];
 }

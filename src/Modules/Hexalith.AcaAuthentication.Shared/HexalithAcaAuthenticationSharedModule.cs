@@ -1,10 +1,10 @@
-﻿namespace Hexalith.AzureContainerAppAuthentication.Shared;
+﻿namespace Hexalith.AcaAuthentication.Shared;
 
 using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
-using Hexalith.AzureContainerAppAuthentication.Shared.Configurations;
+using Hexalith.AcaAuthentication.Shared.Configurations;
 using Hexalith.Extensions.Configuration;
 
 using Microsoft.Extensions.Configuration;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// Microsoft Entra ID shared module.
 /// </summary>
-public class HexalithAzureContainerAppAuthenticationSharedModule : ISharedApplicationModule
+public class HexalithAcaAuthenticationSharedModule : ISharedApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -22,16 +22,16 @@ public class HexalithAzureContainerAppAuthenticationSharedModule : ISharedApplic
     public string Description => "Hexalith Open ID connect shared module";
 
     /// <inheritdoc/>
-    public string Id => "Hexalith.AzureContainerAppAuthentication.Shared";
+    public string Id => "Hexalith.AcaAuthentication.Shared";
 
     /// <inheritdoc/>
-    public string Name => "Hexalith AzureContainerAppAuthentication shared";
+    public string Name => "Hexalith AcaAuthentication shared";
 
     /// <inheritdoc/>
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    public string Path => "hexalith/AzureContainerAppAuthentication";
+    public string Path => "hexalith/AcaAuthentication";
 
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];
@@ -49,7 +49,7 @@ public class HexalithAzureContainerAppAuthenticationSharedModule : ISharedApplic
         _ = services
             .AddAuthorizationCore()
             .AddCascadingAuthenticationState()
-            .ConfigureSettings<AzureContainerAppAuthenticationSettings>(configuration);
+            .ConfigureSettings<AcaAuthenticationSettings>(configuration);
     }
 
     /// <inheritdoc/>
