@@ -4,21 +4,13 @@
 //     See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.Oidc.UnitTests.Modules;
-
-using FluentAssertions;
+namespace Hexalith.AzureContainerAppAuthentication.UnitTests.Modules;
 
 using Hexalith.Application.Modules.Applications;
-using Hexalith.Oidc.Client;
-using Hexalith.Oidc.Server;
-using Hexalith.Oidc.Shared;
+using Hexalith.AzureContainerAppAuthentication.Client;
+using Hexalith.AzureContainerAppAuthentication.Server;
+using Hexalith.AzureContainerAppAuthentication.Shared;
 using Hexalith.UI.Components.Modules;
-
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-using Moq;
 
 public class HexalithApplicationTest
 {
@@ -52,13 +44,13 @@ public class HexalithApplicationTest
             .HaveCount(3);
         _ = HexalithApplication.Client.ClientModules
             .Should()
-            .Contain(typeof(HexalithOidcClientModule));
+            .Contain(typeof(HexalithAzureContainerAppAuthenticationClientModule));
         _ = HexalithApplication.Client.Modules
             .Should()
-            .Contain(typeof(HexalithOidcSharedModule));
+            .Contain(typeof(HexalithAzureContainerAppAuthenticationSharedModule));
         _ = HexalithApplication.Client.Modules
             .Should()
-            .Contain(typeof(HexalithOidcClientModule));
+            .Contain(typeof(HexalithAzureContainerAppAuthenticationClientModule));
         _ = HexalithApplication.Client.Modules
             .Should()
             .Contain(typeof(HexalithUIComponentsSharedModule));
@@ -75,10 +67,10 @@ public class HexalithApplicationTest
             .HaveCount(3);
         _ = HexalithApplication.Server.ServerModules
             .Should()
-            .Contain(typeof(HexalithOidcServerModule));
+            .Contain(typeof(HexalithAzureContainerAppAuthenticationServerModule));
         _ = HexalithApplication.Server.Modules
             .Should()
-            .Contain(typeof(HexalithOidcSharedModule));
+            .Contain(typeof(HexalithAzureContainerAppAuthenticationSharedModule));
         _ = HexalithApplication.Server.Modules
             .Should()
             .Contain(typeof(HexalithUIComponentsSharedModule));

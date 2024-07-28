@@ -118,7 +118,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\sonarqube.yml = .github\workflows\sonarqube.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AzureContainerAppAuthentication.UnitTests", "test\Hexalith.AzureContainerAppAuthentication.UnitTests\Hexalith.AzureContainerAppAuthentication.UnitTests.csproj", "{0FB784CA-270E-423F-9002-2B16A692C461}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AcaAuthentication.UnitTests", "test\Hexalith.AcaAuthentication.UnitTests\Hexalith.AcaAuthentication.UnitTests.csproj", "{0FB784CA-270E-423F-9002-2B16A692C461}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_global", "_global", "{1E9B2907-372E-4D83-96E0-F09636AF1E6A}"
 	ProjectSection(SolutionItems) = preProject
@@ -144,11 +144,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexalithApp.Shared", "Hexal
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{42E73C73-473F-4769-A460-D57ECAC1F8F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AzureContainerAppAuthentication.Shared", "src\Modules\Hexalith.AzureContainerAppAuthentication.Shared\Hexalith.AzureContainerAppAuthentication.Shared.csproj", "{452693CB-499A-4D88-A5DC-C8276B8BC626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AcaAuthentication.Shared", "src\Modules\Hexalith.AcaAuthentication.Shared\Hexalith.AcaAuthentication.Shared.csproj", "{452693CB-499A-4D88-A5DC-C8276B8BC626}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AzureContainerAppAuthentication.Client", "src\Modules\Hexalith.AzureContainerAppAuthentication.Client\Hexalith.AzureContainerAppAuthentication.Client.csproj", "{9DED4399-1E8D-4946-BDC1-D7AD97287CA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AcaAuthentication.Client", "src\Modules\Hexalith.AcaAuthentication.Client\Hexalith.AcaAuthentication.Client.csproj", "{9DED4399-1E8D-4946-BDC1-D7AD97287CA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AzureContainerAppAuthentication.Server", "src\Modules\Hexalith.AzureContainerAppAuthentication.Server\Hexalith.AzureContainerAppAuthentication.Server.csproj", "{1E632F29-A727-400A-8983-892C25280056}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexalith.AcaAuthentication.Server", "src\Modules\Hexalith.AcaAuthentication.Server\Hexalith.AcaAuthentication.Server.csproj", "{1E632F29-A727-400A-8983-892C25280056}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{80D29F19-93CA-4F1D-B3E3-24DE1E57246F}"
 	ProjectSection(SolutionItems) = preProject
