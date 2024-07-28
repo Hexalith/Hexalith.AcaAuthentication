@@ -1,5 +1,5 @@
 # Hexalith.AcaAuthentication
-Open Id Connect authentication and authorization 
+Azure Container App authentication
 
 ## Build status
 
