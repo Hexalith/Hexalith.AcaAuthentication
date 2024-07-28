@@ -6,11 +6,19 @@
 
 namespace Hexalith.AcaAuthentication.UnitTests.Modules;
 
-using Hexalith.Application.Modules.Applications;
+using FluentAssertions;
+
 using Hexalith.AcaAuthentication.Client;
 using Hexalith.AcaAuthentication.Server;
 using Hexalith.AcaAuthentication.Shared;
+using Hexalith.Application.Modules.Applications;
 using Hexalith.UI.Components.Modules;
+
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+using Moq;
 
 public class HexalithApplicationTest
 {
