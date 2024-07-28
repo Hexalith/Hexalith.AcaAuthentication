@@ -1,10 +1,10 @@
-namespace Hexalith.Oidc.Client;
+namespace Hexalith.AzureContainerAppAuthentication.Client;
 
 using System;
 using System.Collections.Generic;
 
 using Hexalith.Application.Modules.Applications;
-using Hexalith.Oidc.Server;
+using Hexalith.AzureContainerAppAuthentication.Server;
 
 /// <summary>
 /// Represents a server application.
@@ -15,7 +15,7 @@ public class ServerApplication : HexalithServerApplication
     public override Type ClientApplicationType => typeof(ClientApplication);
 
     /// <inheritdoc/>
-    public override IEnumerable<Type> ServerModules => [typeof(HexalithOidcServerModule)];
+    public override IEnumerable<Type> ServerModules => [typeof(HexalithAzureContainerAppAuthenticationServerModule)];
 
     /// <inheritdoc/>
     public override Type SharedApplicationType => typeof(SharedApplication);

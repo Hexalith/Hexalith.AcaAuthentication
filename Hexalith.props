@@ -1,6 +1,7 @@
 <Project>
 	<PropertyGroup>
 		<HexalithParentProps>$([MSBuild]::GetPathOfFileAbove('Hexalith.props', '$(MSBuildThisFileDirectory)..'))</HexalithParentProps>
+		<HexalithAppName Condition="'$(HexalithAppName)' == ''">authenticationaca</HexalithAppName>
 	</PropertyGroup>
 	<Import Project="$(HexalithParentProps)" Condition=" '$(HexalithParentProps)' != '' " />
 	<PropertyGroup>
