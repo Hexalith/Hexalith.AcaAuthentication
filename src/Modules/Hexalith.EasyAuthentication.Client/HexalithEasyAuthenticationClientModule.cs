@@ -54,6 +54,7 @@ public class HexalithEasyAuthenticationClientModule : IClientApplicationModule
         {
             return;
         }
+
         _ = services.AddScoped<AuthenticationStateProvider, ClientPersistentAuthenticationStateProvider>();
     }
 
