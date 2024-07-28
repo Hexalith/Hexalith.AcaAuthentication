@@ -22,7 +22,7 @@ public sealed class ServerPersistingAuthenticationStateProvider :
     /// <summary>
     /// Initializes a new instance of the <see cref="ServerPersistingAuthenticationStateProvider"/> class.
     /// </summary>
-    /// <param name="state">The authentification state.</param>
+    /// <param name="state">The authentication state.</param>
     public ServerPersistingAuthenticationStateProvider(PersistentComponentState state)
     {
         ArgumentNullException.ThrowIfNull(state);
