@@ -8,10 +8,10 @@ namespace Hexalith.EasyAuthentication.UnitTests.Modules;
 
 using FluentAssertions;
 
+using Hexalith.Application.Modules.Applications;
 using Hexalith.EasyAuthentication.Client;
 using Hexalith.EasyAuthentication.Server;
 using Hexalith.EasyAuthentication.Shared;
-using Hexalith.Application.Modules.Applications;
 using Hexalith.UI.Components.Modules;
 
 using Microsoft.AspNetCore.Components.Authorization;
