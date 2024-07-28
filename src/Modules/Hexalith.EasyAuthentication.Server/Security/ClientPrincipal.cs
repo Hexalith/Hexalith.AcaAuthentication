@@ -15,4 +15,5 @@ public record ClientPrincipal(
     [property:JsonPropertyName("claims")]
     IEnumerable<ClientPrincipalClaim> Claims)
 {
+
 }

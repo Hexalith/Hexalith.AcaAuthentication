@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Microsoft Entra ID shared module.
+/// Microsoft Easy Authentication shared module.
 /// </summary>
 public class HexalithEasyAuthenticationSharedModule : ISharedApplicationModule
 {
@@ -31,7 +31,7 @@ public class HexalithEasyAuthenticationSharedModule : ISharedApplicationModule
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    public string Path => "hexalith/EasyAuthentication";
+    public string Path => "Hexalith/EasyAuthentication";
 
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];

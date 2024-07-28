@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Microsoft Entra ID client module.
+/// Microsoft Easy Authentication client module.
 /// </summary>
 public class HexalithEasyAuthenticationClientModule : IClientApplicationModule
 {
@@ -19,19 +19,19 @@ public class HexalithEasyAuthenticationClientModule : IClientApplicationModule
     public IEnumerable<string> Dependencies => [];
 
     /// <inheritdoc/>
-    public string Description => "Microsoft Entra ID client module";
+    public string Description => "Microsoft Easy Authentication client module";
 
     /// <inheritdoc/>
     public string Id => "Hexalith.EasyAuthentication.Client";
 
     /// <inheritdoc/>
-    public string Name => "Microsoft Entra ID client";
+    public string Name => "Microsoft Easy Authentication client";
 
     /// <inheritdoc/>
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    public string Path => "hexalith/microsoftentraid";
+    public string Path => "Hexalith/EasyAuthentication";
 
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];
