@@ -8,6 +8,7 @@ using Hexalith.EasyAuthentication.Shared.Configurations;
 using Hexalith.Extensions.Helpers;
 
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -64,14 +65,16 @@ public sealed class HexalithEasyAuthenticationServerModule : IServerApplicationM
             return;
         }
 
-        _ = services.AddEasyAuth();
+        _ = services
+            .AddEasyAuth()
+            .AddIdentityCookies();
         _ = services.AddAuthorization();
 
         // Retrieve the environment name from the environment variable
-        string? environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        if (environmentName == "Development") // Use the mock json file when not running in an app service
+        string? environmentName = configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT");
+        if (environmentName?.Equals("Development", StringComparison.OrdinalIgnoreCase) == true) // Use the mock json file when not running in an app service
         {
-            string mockFile = $"{Directory.GetCurrentDirectory()}\\mock_user.json";
+            string mockFile = $"{AppDomain.CurrentDomain.BaseDirectory}\\mock_user.json";
             _ = services.AddSingleton((IServiceProvider provider) => new JsonFileHeaderDictionaryProviderOptions
             {
                 JsonFilePath = mockFile,
