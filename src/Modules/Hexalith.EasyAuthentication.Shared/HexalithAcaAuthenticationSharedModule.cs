@@ -1,10 +1,10 @@
-﻿namespace Hexalith.AcaAuthentication.Shared;
+﻿namespace Hexalith.EasyAuthentication.Shared;
 
 using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
-using Hexalith.AcaAuthentication.Shared.Configurations;
+using Hexalith.EasyAuthentication.Shared.Configurations;
 using Hexalith.Extensions.Configuration;
 
 using Microsoft.Extensions.Configuration;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// Microsoft Entra ID shared module.
 /// </summary>
-public class HexalithAcaAuthenticationSharedModule : ISharedApplicationModule
+public class HexalithEasyAuthenticationSharedModule : ISharedApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -22,16 +22,16 @@ public class HexalithAcaAuthenticationSharedModule : ISharedApplicationModule
     public string Description => "Hexalith Open ID connect shared module";
 
     /// <inheritdoc/>
-    public string Id => "Hexalith.AcaAuthentication.Shared";
+    public string Id => "Hexalith.EasyAuthentication.Shared";
 
     /// <inheritdoc/>
-    public string Name => "Hexalith AcaAuthentication shared";
+    public string Name => "Hexalith EasyAuthentication shared";
 
     /// <inheritdoc/>
     public int OrderWeight => 0;
 
     /// <inheritdoc/>
-    public string Path => "hexalith/AcaAuthentication";
+    public string Path => "hexalith/EasyAuthentication";
 
     /// <inheritdoc/>
     public IEnumerable<Assembly> PresentationAssemblies => [GetType().Assembly];
@@ -49,7 +49,7 @@ public class HexalithAcaAuthenticationSharedModule : ISharedApplicationModule
         _ = services
             .AddAuthorizationCore()
             .AddCascadingAuthenticationState()
-            .ConfigureSettings<AcaAuthenticationSettings>(configuration);
+            .ConfigureSettings<EasyAuthenticationSettings>(configuration);
     }
 
     /// <inheritdoc/>

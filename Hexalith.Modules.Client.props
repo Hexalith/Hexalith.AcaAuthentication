@@ -4,12 +4,12 @@
 	</PropertyGroup>
 	<Import Project="$(HexalithModulesClientProps)" Condition=" '$(HexalithModulesClientProps)' != '' " />
 	<ItemGroup Condition="'$(UseProjectReference)' == 'true'">
-		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Shared\Hexalith.AcaAuthentication.Shared.csproj" />
-		<ProjectReference Include="$(HexalithAcaAuthenticationPath)\src\Modules\Hexalith.AcaAuthentication.Client\Hexalith.AcaAuthentication.Client.csproj" />
+		<ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.Shared\Hexalith.EasyAuthentication.Shared.csproj" />
+		<ProjectReference Include="$(HexalithEasyAuthenticationPath)\src\Modules\Hexalith.EasyAuthentication.Client\Hexalith.EasyAuthentication.Client.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(UseProjectReference)' != 'true'">
-		<PackageReference Include="Hexalith.AcaAuthentication.Shared" Version="$(HexalithAcaAuthenticationVersion)" />
-		<PackageReference Include="Hexalith.AcaAuthentication.Client" Version="$(HexalithAcaAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.EasyAuthentication.Shared" Version="$(HexalithEasyAuthenticationVersion)" />
+		<PackageReference Include="Hexalith.EasyAuthentication.Client" Version="$(HexalithEasyAuthenticationVersion)" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="$(MSBuildThisFileDirectory)src/ClientApplication.cs" />

@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AcaAuthentication.Shared.Configurations;
+﻿namespace Hexalith.EasyAuthentication.Shared.Configurations;
 
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -24,10 +24,10 @@ using Hexalith.Extensions.Configuration;
 /// Set the client secret for the application.
 /// </param>
 [DataContract]
-public record AcaAuthenticationSettings(
+public record EasyAuthenticationSettings(
     [property: DataMember]
     [property:JsonConverter(typeof(JsonStringEnumConverter))]
-    AcaAuthenticationType AcaAuthenticationType,
+    EasyAuthenticationType EasyAuthenticationType,
     [property: DataMember]
     string Tenant,
     [property: DataMember]
@@ -38,10 +38,10 @@ public record AcaAuthenticationSettings(
     string ClientSecret) : ISettings
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AcaAuthenticationSettings"/> class.
+    /// Initializes a new instance of the <see cref="EasyAuthenticationSettings"/> class.
     /// </summary>
-    public AcaAuthenticationSettings()
-        : this(AcaAuthenticationType.AcaAuthentication, string.Empty, string.Empty, string.Empty, string.Empty)
+    public EasyAuthenticationSettings()
+        : this(EasyAuthenticationType.EasyAuthentication, string.Empty, string.Empty, string.Empty, string.Empty)
     {
     }
 
@@ -49,5 +49,5 @@ public record AcaAuthenticationSettings(
     /// The name of the configuration.
     /// </summary>
     /// <returns>Settings section name.</returns>
-    public static string ConfigurationName() => nameof(Hexalith) + ":" + nameof(AcaAuthentication);
+    public static string ConfigurationName() => nameof(Hexalith) + ":" + nameof(EasyAuthentication);
 }

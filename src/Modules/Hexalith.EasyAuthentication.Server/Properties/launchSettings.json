@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Hexalith.AcaAuthentication.Server": {
+    "Hexalith.EasyAuthentication.Server": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

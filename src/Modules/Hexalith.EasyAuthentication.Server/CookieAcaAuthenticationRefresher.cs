@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AcaAuthentication.Server;
+﻿namespace Hexalith.EasyAuthentication.Server;
 
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,12 +15,12 @@ using Microsoft.IdentityModel.Tokens;
 /// <summary>
 /// https://github.com/dotnet/aspnetcore/issues/8175.
 /// </summary>
-/// <param name="AcaAuthenticationOptionsMonitor">AcaAuthentication options.</param>
-internal sealed class CookieAcaAuthenticationRefresher(IOptionsMonitor<OpenIdConnectOptions> AcaAuthenticationOptionsMonitor) : IDisposable
+/// <param name="EasyAuthenticationOptionsMonitor">EasyAuthentication options.</param>
+internal sealed class CookieEasyAuthenticationRefresher(IOptionsMonitor<OpenIdConnectOptions> EasyAuthenticationOptionsMonitor) : IDisposable
 {
-    private readonly OpenIdConnectProtocolValidator _AcaAuthenticationTokenValidator = new()
+    private readonly OpenIdConnectProtocolValidator _EasyAuthenticationTokenValidator = new()
     {
-        // Refresh requests do not use the nonce parameter. Otherwise, we'd use AcaAuthenticationOptions.ProtocolValidator.
+        // Refresh requests do not use the nonce parameter. Otherwise, we'd use EasyAuthenticationOptions.ProtocolValidator.
         RequireNonce = false,
     };
 
@@ -33,10 +33,10 @@ internal sealed class CookieAcaAuthenticationRefresher(IOptionsMonitor<OpenIdCon
     /// Validates or refreshes the cookie.
     /// </summary>
     /// <param name="validateContext">The context.</param>
-    /// <param name="AcaAuthenticationScheme">The AcaAuthentication scheme.</param>
+    /// <param name="EasyAuthenticationScheme">The EasyAuthentication scheme.</param>
     /// <returns>The tesk.</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    internal async Task ValidateOrRefreshCookieAsync(CookieValidatePrincipalContext validateContext, string AcaAuthenticationScheme)
+    internal async Task ValidateOrRefreshCookieAsync(CookieValidatePrincipalContext validateContext, string EasyAuthenticationScheme)
     {
         string? accessTokenExpirationText = validateContext.Properties.GetTokenValue("expires_at");
         if (!DateTimeOffset.TryParse(
@@ -47,22 +47,22 @@ internal sealed class CookieAcaAuthenticationRefresher(IOptionsMonitor<OpenIdCon
             return;
         }
 
-        OpenIdConnectOptions AcaAuthenticationOptions = AcaAuthenticationOptionsMonitor.Get(AcaAuthenticationScheme);
-        DateTimeOffset now = AcaAuthenticationOptions.TimeProvider!.GetUtcNow();
+        OpenIdConnectOptions EasyAuthenticationOptions = EasyAuthenticationOptionsMonitor.Get(EasyAuthenticationScheme);
+        DateTimeOffset now = EasyAuthenticationOptions.TimeProvider!.GetUtcNow();
         if (now + TimeSpan.FromMinutes(5) < accessTokenExpiration)
         {
             return;
         }
 
         const string refreshTokenName = "refresh_token";
-        OpenIdConnectConfiguration AcaAuthenticationConfiguration = await AcaAuthenticationOptions.ConfigurationManager!.GetConfigurationAsync(validateContext.HttpContext.RequestAborted).ConfigureAwait(false);
-        string tokenEndpoint = AcaAuthenticationConfiguration.TokenEndpoint ?? throw new InvalidOperationException("Cannot refresh cookie. TokenEndpoint missing!");
+        OpenIdConnectConfiguration EasyAuthenticationConfiguration = await EasyAuthenticationOptions.ConfigurationManager!.GetConfigurationAsync(validateContext.HttpContext.RequestAborted).ConfigureAwait(false);
+        string tokenEndpoint = EasyAuthenticationConfiguration.TokenEndpoint ?? throw new InvalidOperationException("Cannot refresh cookie. TokenEndpoint missing!");
         using FormUrlEncodedContent formUrlEncoded = new(new Dictionary<string, string?>
         {
             ["grant_type"] = refreshTokenName,
-            ["client_id"] = AcaAuthenticationOptions.ClientId,
-            ["client_secret"] = AcaAuthenticationOptions.ClientSecret,
-            ["scope"] = string.Join(" ", AcaAuthenticationOptions.Scope),
+            ["client_id"] = EasyAuthenticationOptions.ClientId,
+            ["client_secret"] = EasyAuthenticationOptions.ClientSecret,
+            ["scope"] = string.Join(" ", EasyAuthenticationOptions.Scope),
             [refreshTokenName] = validateContext.Properties.GetTokenValue(refreshTokenName),
         });
         using HttpResponseMessage refreshResponse = await _refreshClient.PostAsync(
@@ -79,18 +79,18 @@ internal sealed class CookieAcaAuthenticationRefresher(IOptionsMonitor<OpenIdCon
         string refreshJson = await refreshResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
         OpenIdConnectMessage message = new(refreshJson);
 
-        TokenValidationParameters validationParameters = AcaAuthenticationOptions.TokenValidationParameters.Clone();
-        if (AcaAuthenticationOptions.ConfigurationManager is BaseConfigurationManager baseConfigurationManager)
+        TokenValidationParameters validationParameters = EasyAuthenticationOptions.TokenValidationParameters.Clone();
+        if (EasyAuthenticationOptions.ConfigurationManager is BaseConfigurationManager baseConfigurationManager)
         {
             validationParameters.ConfigurationManager = baseConfigurationManager;
         }
         else
         {
-            validationParameters.ValidIssuer = AcaAuthenticationConfiguration.Issuer;
-            validationParameters.IssuerSigningKeys = AcaAuthenticationConfiguration.SigningKeys;
+            validationParameters.ValidIssuer = EasyAuthenticationConfiguration.Issuer;
+            validationParameters.IssuerSigningKeys = EasyAuthenticationConfiguration.SigningKeys;
         }
 
-        TokenValidationResult validationResult = await AcaAuthenticationOptions.TokenHandler.ValidateTokenAsync(message.IdToken, validationParameters).ConfigureAwait(false);
+        TokenValidationResult validationResult = await EasyAuthenticationOptions.TokenHandler.ValidateTokenAsync(message.IdToken, validationParameters).ConfigureAwait(false);
 
         if (!validationResult.IsValid)
         {
@@ -98,10 +98,10 @@ internal sealed class CookieAcaAuthenticationRefresher(IOptionsMonitor<OpenIdCon
             return;
         }
 
-        _AcaAuthenticationTokenValidator.ValidateTokenResponse(new()
+        _EasyAuthenticationTokenValidator.ValidateTokenResponse(new()
         {
             ProtocolMessage = message,
-            ClientId = AcaAuthenticationOptions.ClientId,
+            ClientId = EasyAuthenticationOptions.ClientId,
             ValidatedIdToken = JwtSecurityTokenConverter.Convert(validationResult.SecurityToken as JsonWebToken),
         });
 

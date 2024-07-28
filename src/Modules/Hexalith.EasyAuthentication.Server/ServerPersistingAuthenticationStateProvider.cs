@@ -1,6 +1,6 @@
-﻿namespace Hexalith.AcaAuthentication.Server;
+﻿namespace Hexalith.EasyAuthentication.Server;
 
-using Hexalith.AcaAuthentication.Shared;
+using Hexalith.EasyAuthentication.Shared;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

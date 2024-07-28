@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AcaAuthentication.Shared;
+﻿namespace Hexalith.EasyAuthentication.Shared;
 
 using System.Security.Claims;
 

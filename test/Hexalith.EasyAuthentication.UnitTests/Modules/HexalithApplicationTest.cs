@@ -4,13 +4,13 @@
 //     See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Hexalith.AcaAuthentication.UnitTests.Modules;
+namespace Hexalith.EasyAuthentication.UnitTests.Modules;
 
 using FluentAssertions;
 
-using Hexalith.AcaAuthentication.Client;
-using Hexalith.AcaAuthentication.Server;
-using Hexalith.AcaAuthentication.Shared;
+using Hexalith.EasyAuthentication.Client;
+using Hexalith.EasyAuthentication.Server;
+using Hexalith.EasyAuthentication.Shared;
 using Hexalith.Application.Modules.Applications;
 using Hexalith.UI.Components.Modules;
 
@@ -52,13 +52,13 @@ public class HexalithApplicationTest
             .HaveCount(3);
         _ = HexalithApplication.Client.ClientModules
             .Should()
-            .Contain(typeof(HexalithAcaAuthenticationClientModule));
+            .Contain(typeof(HexalithEasyAuthenticationClientModule));
         _ = HexalithApplication.Client.Modules
             .Should()
-            .Contain(typeof(HexalithAcaAuthenticationSharedModule));
+            .Contain(typeof(HexalithEasyAuthenticationSharedModule));
         _ = HexalithApplication.Client.Modules
             .Should()
-            .Contain(typeof(HexalithAcaAuthenticationClientModule));
+            .Contain(typeof(HexalithEasyAuthenticationClientModule));
         _ = HexalithApplication.Client.Modules
             .Should()
             .Contain(typeof(HexalithUIComponentsSharedModule));
@@ -75,10 +75,10 @@ public class HexalithApplicationTest
             .HaveCount(3);
         _ = HexalithApplication.Server.ServerModules
             .Should()
-            .Contain(typeof(HexalithAcaAuthenticationServerModule));
+            .Contain(typeof(HexalithEasyAuthenticationServerModule));
         _ = HexalithApplication.Server.Modules
             .Should()
-            .Contain(typeof(HexalithAcaAuthenticationSharedModule));
+            .Contain(typeof(HexalithEasyAuthenticationSharedModule));
         _ = HexalithApplication.Server.Modules
             .Should()
             .Contain(typeof(HexalithUIComponentsSharedModule));

@@ -5,7 +5,7 @@
 		<StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Hexalith.AcaAuthentication.Shared\Hexalith.AcaAuthentication.Shared.csproj" />
+	  <ProjectReference Include="..\Hexalith.EasyAuthentication.Shared\Hexalith.EasyAuthentication.Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="$(AspNetCorePackagesVersion)" />

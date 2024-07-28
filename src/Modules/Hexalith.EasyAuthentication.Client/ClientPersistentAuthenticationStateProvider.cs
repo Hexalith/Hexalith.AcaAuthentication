@@ -1,9 +1,9 @@
-﻿namespace Hexalith.AcaAuthentication.Client;
+﻿namespace Hexalith.EasyAuthentication.Client;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 
-using Hexalith.AcaAuthentication.Shared;
+using Hexalith.EasyAuthentication.Shared;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

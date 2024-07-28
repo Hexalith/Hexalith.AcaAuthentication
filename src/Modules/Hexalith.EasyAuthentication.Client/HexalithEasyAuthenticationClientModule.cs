@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AcaAuthentication.Client;
+﻿namespace Hexalith.EasyAuthentication.Client;
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// Microsoft Entra ID client module.
 /// </summary>
-public class HexalithAcaAuthenticationClientModule : IClientApplicationModule
+public class HexalithEasyAuthenticationClientModule : IClientApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -22,7 +22,7 @@ public class HexalithAcaAuthenticationClientModule : IClientApplicationModule
     public string Description => "Microsoft Entra ID client module";
 
     /// <inheritdoc/>
-    public string Id => "Hexalith.AcaAuthentication.Client";
+    public string Id => "Hexalith.EasyAuthentication.Client";
 
     /// <inheritdoc/>
     public string Name => "Microsoft Entra ID client";

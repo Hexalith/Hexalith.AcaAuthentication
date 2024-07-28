@@ -1,4 +1,4 @@
-﻿namespace Hexalith.AcaAuthentication.Server;
+﻿namespace Hexalith.EasyAuthentication.Server;
 
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,7 +7,7 @@ using System.Reflection;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.Extensions.Configuration;
 using Hexalith.Extensions.Helpers;
-using Hexalith.AcaAuthentication.Shared.Configurations;
+using Hexalith.EasyAuthentication.Shared.Configurations;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,7 +25,7 @@ using Microsoft.IdentityModel.Validators;
 /// <summary>
 /// Microsoft Entra ID server module.
 /// </summary>
-public sealed class HexalithAcaAuthenticationServerModule : IServerApplicationModule
+public sealed class HexalithEasyAuthenticationServerModule : IServerApplicationModule
 {
     /// <inheritdoc/>
     public IEnumerable<string> Dependencies => [];
@@ -34,7 +34,7 @@ public sealed class HexalithAcaAuthenticationServerModule : IServerApplicationMo
     public string Description => "Microsoft Entra ID server module";
 
     /// <inheritdoc/>
-    public string Id => "Hexalith.AcaAuthentication.Server";
+    public string Id => "Hexalith.EasyAuthentication.Server";
 
     /// <inheritdoc/>
     public string Name => "Microsoft Entra ID server";
@@ -49,13 +49,13 @@ public sealed class HexalithAcaAuthenticationServerModule : IServerApplicationMo
     public string Version => "1.0";
 
     /// <inheritdoc/>
-    string IApplicationModule.Path => HexalithAcaAuthenticationServerModule.Path;
+    string IApplicationModule.Path => HexalithEasyAuthenticationServerModule.Path;
 
     private static string CookieScheme => "Cookies";
 
-    private static string AcaAuthenticationScheme => "MicrosoftAcaAuthentication";
+    private static string EasyAuthenticationScheme => "MicrosoftEasyAuthentication";
 
-    private static string Path => "hexalith/AcaAuthentication";
+    private static string Path => "hexalith/EasyAuthentication";
 
     /// <summary>
     /// Adds services to the service collection.
@@ -66,95 +66,95 @@ public sealed class HexalithAcaAuthenticationServerModule : IServerApplicationMo
     {
         _ = services.AddScoped<AuthenticationStateProvider, ServerPersistingAuthenticationStateProvider>();
 
-        AcaAuthenticationSettings settings = configuration.GetSettings<AcaAuthenticationSettings>()
-            ?? throw new InvalidOperationException($"Could not load settings section '{AcaAuthenticationSettings.ConfigurationName()}'");
-        SettingsException<AcaAuthenticationSettings>.ThrowIfNullOrWhiteSpace(settings.ClientId);
-        SettingsException<AcaAuthenticationSettings>.ThrowIfNullOrWhiteSpace(settings.ClientSecret);
-        if (settings.AcaAuthenticationType != AcaAuthenticationType.MicrosoftEntraId)
+        EasyAuthenticationSettings settings = configuration.GetSettings<EasyAuthenticationSettings>()
+            ?? throw new InvalidOperationException($"Could not load settings section '{EasyAuthenticationSettings.ConfigurationName()}'");
+        SettingsException<EasyAuthenticationSettings>.ThrowIfNullOrWhiteSpace(settings.ClientId);
+        SettingsException<EasyAuthenticationSettings>.ThrowIfNullOrWhiteSpace(settings.ClientSecret);
+        if (settings.EasyAuthenticationType != EasyAuthenticationType.MicrosoftEntraId)
         {
-            SettingsException<AcaAuthenticationSettings>.ThrowIfNullOrWhiteSpace(settings.Authority);
+            SettingsException<EasyAuthenticationSettings>.ThrowIfNullOrWhiteSpace(settings.Authority);
         }
 
         // Add services to the container.
-        _ = services.AddAuthentication(AcaAuthenticationScheme)
-            .AddOpenIdConnect(AcaAuthenticationScheme, AcaAuthenticationOptions =>
+        _ = services.AddAuthentication(EasyAuthenticationScheme)
+            .AddOpenIdConnect(EasyAuthenticationScheme, EasyAuthenticationOptions =>
             {
-                // The AcaAuthentication handler must use a sign-in scheme capable of persisting
+                // The EasyAuthentication handler must use a sign-in scheme capable of persisting
                 // user credentials across requests.
-                AcaAuthenticationOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                EasyAuthenticationOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
-                // The "openid" and "profile" scopes are required for the AcaAuthentication handler
+                // The "openid" and "profile" scopes are required for the EasyAuthentication handler
                 // and included by default. You should enable these scopes here if scopes
-                // are provided by "Authentication:Schemes:MicrosoftAcaAuthentication:Scope"
+                // are provided by "Authentication:Schemes:MicrosoftEasyAuthentication:Scope"
                 // configuration because configuration may overwrite the scopes collection.
-                AcaAuthenticationOptions.Scope.Add(OpenIdConnectScope.OpenIdProfile);
+                EasyAuthenticationOptions.Scope.Add(OpenIdConnectScope.OpenIdProfile);
 
                 // SaveTokens is set to false by default because tokens aren't required
                 // by the app to make additional external API requests.
-                AcaAuthenticationOptions.SaveTokens = false;
+                EasyAuthenticationOptions.SaveTokens = false;
 
                 // The following paths must match the redirect and post logout redirect
-                // paths configured when registering the application with the AcaAuthentication provider.
+                // paths configured when registering the application with the EasyAuthentication provider.
                 // For Microsoft Entra ID, this is accomplished through the "Authentication"
                 // blade of the application's registration in the Azure portal. Both the
                 // signin and signout paths must be registered as Redirect URIs. The default
-                // values are "/signin-AcaAuthentication" and "/signout-callback-AcaAuthentication".
+                // values are "/signin-EasyAuthentication" and "/signout-callback-EasyAuthentication".
                 // Microsoft Identity currently only redirects back to the
                 // SignedOutCallbackPath if authority is
                 // https://login.microsoftonline.com/{TENANT ID}/v2.0/ as it is above.
                 // You can use the "common" authority instead, and logout redirects back to
                 // the Blazor app. For more information, see
                 // https://github.com/AzureAD/microsoft-authentication-library-for-js/issues/5783
-                AcaAuthenticationOptions.CallbackPath = new PathString("/signin-AcaAuthentication");
-                AcaAuthenticationOptions.SignedOutCallbackPath = new PathString("/signout-callback-AcaAuthentication");
+                EasyAuthenticationOptions.CallbackPath = new PathString("/signin-EasyAuthentication");
+                EasyAuthenticationOptions.SignedOutCallbackPath = new PathString("/signout-callback-EasyAuthentication");
 
                 // The RemoteSignOutPath is the "Front-channel logout URL" for remote single
-                // sign-out. The default value is "/signout-AcaAuthentication".
-                AcaAuthenticationOptions.RemoteSignOutPath = new PathString("/signout-AcaAuthentication");
+                // sign-out. The default value is "/signout-EasyAuthentication".
+                EasyAuthenticationOptions.RemoteSignOutPath = new PathString("/signout-EasyAuthentication");
 
                 // The "offline_access" scope is required for the refresh token.
-                AcaAuthenticationOptions.Scope.Add(OpenIdConnectScope.OfflineAccess);
+                EasyAuthenticationOptions.Scope.Add(OpenIdConnectScope.OfflineAccess);
 
                 string tenant = string.IsNullOrWhiteSpace(settings.Tenant) ? "common" : settings.Tenant;
-                AcaAuthenticationOptions.Authority = settings.AcaAuthenticationType == AcaAuthenticationType.MicrosoftEntraId
+                EasyAuthenticationOptions.Authority = settings.EasyAuthenticationType == EasyAuthenticationType.MicrosoftEntraId
                     ? $"https://login.microsoftonline.com/{tenant}/v2.0/"
                     : settings.Authority;
 
                 // Set the client identifier and secret for the app.
-                AcaAuthenticationOptions.ClientId = settings.ClientId;
-                AcaAuthenticationOptions.ClientSecret = settings.ClientSecret;
+                EasyAuthenticationOptions.ClientId = settings.ClientId;
+                EasyAuthenticationOptions.ClientSecret = settings.ClientSecret;
 
-                // Setting ResponseType to "code" configures the AcaAuthentication handler to use
+                // Setting ResponseType to "code" configures the EasyAuthentication handler to use
                 // authorization code flow. Implicit grants and hybrid flows are unnecessary
                 // in this mode. In a Microsoft Entra ID app registration, you don't need to
                 // select either box for the authorization endpoint to return access tokens
-                // or ID tokens. The AcaAuthentication handler automatically requests the appropriate
+                // or ID tokens. The EasyAuthentication handler automatically requests the appropriate
                 // tokens using the code returned from the authorization endpoint.
-                AcaAuthenticationOptions.ResponseType = OpenIdConnectResponseType.Code;
+                EasyAuthenticationOptions.ResponseType = OpenIdConnectResponseType.Code;
 
-                // Many AcaAuthentication servers use "name" and "role" rather than the SOAP/WS-Fed
+                // Many EasyAuthentication servers use "name" and "role" rather than the SOAP/WS-Fed
                 // defaults in ClaimTypes. If you don't use ClaimTypes, mapping inbound
                 // claims to ASP.NET Core's ClaimTypes isn't necessary.
-                AcaAuthenticationOptions.MapInboundClaims = false;
-                AcaAuthenticationOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
-                AcaAuthenticationOptions.TokenValidationParameters.RoleClaimType = "role";
+                EasyAuthenticationOptions.MapInboundClaims = false;
+                EasyAuthenticationOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
+                EasyAuthenticationOptions.TokenValidationParameters.RoleClaimType = "role";
 
-                if (settings.AcaAuthenticationType == AcaAuthenticationType.MicrosoftEntraId && string.IsNullOrWhiteSpace(settings.Tenant))
+                if (settings.EasyAuthenticationType == EasyAuthenticationType.MicrosoftEntraId && string.IsNullOrWhiteSpace(settings.Tenant))
                 {
-                    // Many AcaAuthentication providers work with the default issuer validator, but the
+                    // Many EasyAuthentication providers work with the default issuer validator, but the
                     // configuration must account for the issuer parameterized with "{TENANT ID}"
                     // returned by the "common" endpoint's /.well-known/openid-configuration
                     // For more information, see
                     // https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1731
-                    AadIssuerValidator microsoftIssuerValidator = AadIssuerValidator.GetAadIssuerValidator(AcaAuthenticationOptions.Authority);
-                    AcaAuthenticationOptions.TokenValidationParameters.IssuerValidator = microsoftIssuerValidator.Validate;
+                    AadIssuerValidator microsoftIssuerValidator = AadIssuerValidator.GetAadIssuerValidator(EasyAuthenticationOptions.Authority);
+                    EasyAuthenticationOptions.TokenValidationParameters.IssuerValidator = microsoftIssuerValidator.Validate;
                 }
             })
             .AddCookie(CookieScheme);
 
         // This attaches a cookie OnValidatePrincipal callback to get a new access token when the current one expires, and
         // reissue a cookie with the new access token saved inside. If the refresh fails, the user will be signed out.
-        _ = services.ConfigureCookieAcaAuthenticationRefresh(CookieScheme, AcaAuthenticationScheme);
+        _ = services.ConfigureCookieEasyAuthenticationRefresh(CookieScheme, EasyAuthenticationScheme);
 
         _ = services.AddAuthorization();
     }
@@ -172,12 +172,12 @@ public sealed class HexalithAcaAuthenticationServerModule : IServerApplicationMo
         _ = group.MapGet("login", (string? returnUrl) => TypedResults.Challenge(GetAuthProperties(returnUrl)))
                 .AllowAnonymous();
 
-        // Sign out of the Cookie and AcaAuthentication handlers. If you do not sign out with the AcaAuthentication handler,
+        // Sign out of the Cookie and EasyAuthentication handlers. If you do not sign out with the EasyAuthentication handler,
         // the user will automatically be signed back in the next time they visit a page that requires authentication
         // without being able to choose another account.
         _ = group.MapPost("logout", ([FromForm] string? returnUrl) => TypedResults.SignOut(
                 GetAuthProperties(returnUrl),
-                [CookieScheme, AcaAuthenticationScheme]));
+                [CookieScheme, EasyAuthenticationScheme]));
     }
 
     private static AuthenticationProperties GetAuthProperties(string? returnUrl)

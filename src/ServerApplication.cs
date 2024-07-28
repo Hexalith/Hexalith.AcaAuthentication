@@ -1,10 +1,10 @@
-namespace Hexalith.AcaAuthentication.Client;
+namespace Hexalith.EasyAuthentication.Client;
 
 using System;
 using System.Collections.Generic;
 
 using Hexalith.Application.Modules.Applications;
-using Hexalith.AcaAuthentication.Server;
+using Hexalith.EasyAuthentication.Server;
 
 /// <summary>
 /// Represents a server application.
@@ -15,7 +15,7 @@ public class ServerApplication : HexalithServerApplication
     public override Type ClientApplicationType => typeof(ClientApplication);
 
     /// <inheritdoc/>
-    public override IEnumerable<Type> ServerModules => [typeof(HexalithAcaAuthenticationServerModule)];
+    public override IEnumerable<Type> ServerModules => [typeof(HexalithEasyAuthenticationServerModule)];
 
     /// <inheritdoc/>
     public override Type SharedApplicationType => typeof(SharedApplication);
