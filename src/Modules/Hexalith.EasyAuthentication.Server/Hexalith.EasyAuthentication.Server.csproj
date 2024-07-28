@@ -11,5 +11,6 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="$(AspNetCorePackagesVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsPackagesVersion)" />
 		<PackageReference Include="Microsoft.Identity.Web" Version="$(MicrosoftIdentityWebVersion)" />
+		<PackageReference Include="NEasyAuthMiddleware" Version="3.1.0" />
 	</ItemGroup>
 </Project>

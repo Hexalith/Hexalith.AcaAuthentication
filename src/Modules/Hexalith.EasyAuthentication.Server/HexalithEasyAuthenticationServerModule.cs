@@ -4,18 +4,16 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
-using Hexalith.EasyAuthentication.Server.Helpers;
 using Hexalith.EasyAuthentication.Shared.Configurations;
 using Hexalith.Extensions.Helpers;
 
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+using NEasyAuthMiddleware;
+using NEasyAuthMiddleware.Core;
+using NEasyAuthMiddleware.Providers;
 
 /// <summary>
 /// Microsoft Easy Authentication server module.
@@ -65,54 +63,27 @@ public sealed class HexalithEasyAuthenticationServerModule : IServerApplicationM
         {
             return;
         }
-        _ = services.AddScoped<AuthenticationStateProvider, ServerPersistingAuthenticationStateProvider>();
-        _ = services
-            .AddAuthentication()
-            .AddEasyAuthentication(o => { });
 
+        _ = services.AddEasyAuth();
         _ = services.AddAuthorization();
+
+        // Retrieve the environment name from the environment variable
+        string? environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        if (environmentName == "Development") // Use the mock json file when not running in an app service
+        {
+            string mockFile = $"{Directory.GetCurrentDirectory()}\\mock_user.json";
+            _ = services.AddSingleton((IServiceProvider provider) => new JsonFileHeaderDictionaryProviderOptions
+            {
+                JsonFilePath = mockFile,
+            });
+            _ = services.AddSingleton<IHeaderDictionaryProvider, JsonFileHeaderDictionaryProvider>();
+        }
+
+        _ = services.AddScoped<AuthenticationStateProvider, ServerPersistingAuthenticationStateProvider>();
     }
 
     /// <inheritdoc/>
     public void UseModule(object builder)
     {
-        if (builder is not IEndpointRouteBuilder endpoints)
-        {
-            throw new ArgumentNullException(nameof(builder), $"The application object does not implement {nameof(IEndpointRouteBuilder)}.");
-        }
-
-        RouteGroupBuilder group = endpoints.MapGroup(Path);
-
-        _ = group.MapGet("login", (string? returnUrl) => TypedResults.Challenge(GetAuthProperties(returnUrl)))
-                .AllowAnonymous();
-
-        // Sign out of the Cookie and EasyAuthentication handlers. If you do not sign out with the EasyAuthentication handler,
-        // the user will automatically be signed back in the next time they visit a page that requires authentication
-        // without being able to choose another account.
-        _ = group.MapPost("logout", ([FromForm] string? returnUrl) => TypedResults.SignOut(
-                GetAuthProperties(returnUrl),
-                [CookieScheme, EasyAuthenticationScheme]));
-    }
-
-    private static AuthenticationProperties GetAuthProperties(string? returnUrl)
-    {
-        // TODO: Use HttpContext.Request.PathBase instead.
-        const string pathBase = "/";
-
-        // Prevent open redirects.
-        if (string.IsNullOrEmpty(returnUrl))
-        {
-            returnUrl = pathBase;
-        }
-        else if (!Uri.IsWellFormedUriString(returnUrl, UriKind.Relative))
-        {
-            returnUrl = new Uri(returnUrl, UriKind.Absolute).PathAndQuery;
-        }
-        else if (returnUrl[0] != '/')
-        {
-            returnUrl = $"{pathBase}{returnUrl}";
-        }
-
-        return new AuthenticationProperties { RedirectUri = returnUrl };
     }
 }
