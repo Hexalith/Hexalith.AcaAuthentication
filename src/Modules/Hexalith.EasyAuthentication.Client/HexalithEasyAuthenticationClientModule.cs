@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using Hexalith.Application.Modules.Modules;
+using Hexalith.EasyAuthentication.Shared.Configurations;
+using Hexalith.Extensions.Helpers;
 
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -45,7 +47,15 @@ public class HexalithEasyAuthenticationClientModule : IClientApplicationModule
     /// <param name="services">The service collection.</param>
     /// <param name="configuration">The configuration.</param>
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
-        => _ = services.AddScoped<AuthenticationStateProvider, ClientPersistentAuthenticationStateProvider>();
+    {
+        EasyAuthenticationSettings settings = configuration.GetSettings<EasyAuthenticationSettings>()
+            ?? throw new InvalidOperationException($"Could not load settings section '{EasyAuthenticationSettings.ConfigurationName()}'");
+        if (!settings.Enabled)
+        {
+            return;
+        }
+        _ = services.AddScoped<AuthenticationStateProvider, ClientPersistentAuthenticationStateProvider>();
+    }
 
     /// <inheritdoc/>
     public void UseModule(object builder)

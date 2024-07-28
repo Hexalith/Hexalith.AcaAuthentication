@@ -6,6 +6,7 @@ using System.Reflection;
 using Hexalith.Application.Modules.Modules;
 using Hexalith.EasyAuthentication.Shared.Configurations;
 using Hexalith.Extensions.Configuration;
+using Hexalith.Extensions.Helpers;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,6 +47,13 @@ public class HexalithEasyAuthenticationSharedModule : ISharedApplicationModule
     /// <param name="configuration">The configuration.</param>
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {
+        EasyAuthenticationSettings settings = configuration.GetSettings<EasyAuthenticationSettings>()
+            ?? throw new InvalidOperationException($"Could not load settings section '{EasyAuthenticationSettings.ConfigurationName()}'");
+        if (!settings.Enabled)
+        {
+            return;
+        }
+
         _ = services
             .AddAuthorizationCore()
             .AddCascadingAuthenticationState()
