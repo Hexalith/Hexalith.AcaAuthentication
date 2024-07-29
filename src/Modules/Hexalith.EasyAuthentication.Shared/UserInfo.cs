@@ -37,7 +37,7 @@ public sealed class UserInfo
         new()
         {
             UserId = GetRequiredClaim(principal, UserIdClaimType),
-            Name = GetRequiredClaim(principal, NameClaimType),
+            Name = principal.Identity.Name,
         };
 
     /// <summary>
@@ -46,7 +46,10 @@ public sealed class UserInfo
     /// <returns>A <see cref="ClaimsPrincipal"/> representing the <see cref="UserInfo"/> instance.</returns>
     public ClaimsPrincipal ToClaimsPrincipal() =>
         new(new ClaimsIdentity(
-            new[] { new Claim(UserIdClaimType, UserId), new Claim(NameClaimType, Name) },
+            [
+                new Claim(UserIdClaimType, UserId),
+                new Claim(NameClaimType, Name),
+            ],
             authenticationType: nameof(UserInfo),
             nameType: NameClaimType,
             roleType: null));

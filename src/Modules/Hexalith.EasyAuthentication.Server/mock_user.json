@@ -52,6 +52,10 @@
 				"val": "dasith.wijes@mydomain.com"
 			},
 			{
+				"typ": "sub",
+				"val": "dasith.wijes@mydomain.com"
+			},
+			{
 				"typ": "ver",
 				"val": "1.0"
 			}
